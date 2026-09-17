@@ -37,10 +37,6 @@ BusGo is a bus booking web application built with Java Servlets, MySQL, HTML, CS
 ```text
 BusBookingSystem/
 ├── pom.xml
-├── database_schema.sql
-├── setup_tables.sql
-├── setup_db.bat
-├── setup_db.ps1
 └── src/
     └── main/
         ├── java/com/busapp/
