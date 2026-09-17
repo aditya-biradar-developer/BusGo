@@ -26,6 +26,7 @@ The application allows passengers to search for buses, check available seats, ma
 ## Technologies Used
 
 - Java 8
+- JDBC
 - Java Servlets
 - Apache Maven
 - Apache Tomcat
@@ -33,8 +34,7 @@ The application allows passengers to search for buses, check available seats, ma
 - HTML
 - CSS
 - JavaScript
-- MySQL Connector/J
-- org.json
+
 
 ## Project Structure
 
@@ -176,7 +176,3 @@ mvn -version
 This project was developed as a Java web application for learning and practicing Java Servlets, database connectivity, backend development, and frontend integration.
 
 It is intended for learning and demonstration purposes rather than production use.
-
-## License
-
-No license has been added to this project yet.
