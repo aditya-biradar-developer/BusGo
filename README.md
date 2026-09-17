@@ -1,51 +1,55 @@
 # BusGo
 
-BusGo is a bus booking web application built with Java Servlets, MySQL, HTML, CSS, and JavaScript. Passengers can search routes, choose seats, make bookings, and manage their bookings. Administrators can manage buses, routes, users, and bookings from the admin dashboard.
+BusGo is a bus booking web application built using Java Servlets, MySQL, HTML, CSS, and JavaScript.
+
+The application allows passengers to search for buses, check available seats, make bookings, and manage their bookings. It also has an admin section for managing buses, routes, users, and bookings.
 
 ## Features
 
 ### Passenger
 
-- Create an account and sign in
+- Register and login
 - Search buses by source and destination
-- View bus type, seat availability, schedule, and fare
-- Book an available seat
+- View bus details, schedule, fare, and available seats
+- Select and book an available seat
 - View personal bookings
 - Cancel bookings
 
-### Administrator
+### Admin
 
 - View dashboard statistics
-- Add, edit, and delete buses
-- Add, edit, and delete routes
+- Add, update, and delete buses
+- Add, update, and delete routes
 - View registered users
 - View all bookings
 
-## Technology Stack
+## Technologies Used
 
 - Java 8
-- Java Servlets 4.0.1
+- Java Servlets
 - Apache Maven
 - Apache Tomcat
 - MySQL 8+
-- HTML, CSS, and vanilla JavaScript
-- MySQL Connector/J 8.0.33
+- HTML
+- CSS
+- JavaScript
+- MySQL Connector/J
 - org.json
 
 ## Project Structure
 
 ```text
-BusBookingSystem/
+BusGo/
 ├── pom.xml
-├── setup_tables.sql
-├── setup_db.bat
-├── setup_db.ps1
+├── .gitignore
+├── README.md
 └── src/
     └── main/
-        ├── java/com/busapp/
-        │   ├── model/
-        │   ├── servlet/
-        │   └── util/
+        ├── java/
+        │   └── com/busapp/
+        │       ├── model/
+        │       ├── servlet/
+        │       └── util/
         └── webapp/
             ├── css/
             ├── js/
@@ -53,118 +57,126 @@ BusBookingSystem/
             └── WEB-INF/
 ```
 
+## Database
+
+BusGo uses MySQL to store application data such as users, buses, routes, and bookings.
+
+Create the database using:
+
+```sql
+CREATE DATABASE bus_booking_db;
+```
+
+The application uses the following environment variables for database configuration:
+
+| Variable | Description |
+|---|---|
+| `BUS_DB_URL` | MySQL database URL |
+| `BUS_DB_USER` | MySQL username |
+| `BUS_DB_PASSWORD` | MySQL password |
+
+For example:
+
+```text
+BUS_DB_URL=jdbc:mysql://localhost:3306/bus_booking_db
+BUS_DB_USER=root
+BUS_DB_PASSWORD=your_password
+```
+
+Make sure the MySQL server is running before starting the application.
+
+## Running the Project
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repository-url>
+```
+
+### 2. Open the project
+
+```bash
+cd BusGo
+```
+
+### 3. Build the project
+
+Run:
+
+```bash
+mvn clean package
+```
+
+Maven will download the required dependencies and build the project.
+
+The generated WAR file will be available inside the `target` directory.
+
+### 4. Run the application
+
+If Tomcat is configured through Maven, run:
+
+```bash
+mvn tomcat7:run
+```
+
+Then open the application in your browser:
+
+```text
+http://localhost:8080/BusBookingSystem/
+```
+
+You can also deploy the generated WAR file to a compatible Apache Tomcat server.
+
+## API Endpoints
+
+The frontend communicates with the backend through Java Servlet endpoints.
+
+| Endpoint | Purpose |
+|---|---|
+| `/api/auth` | User registration and login |
+| `/api/bus` | Bus search and bus management |
+| `/api/route` | Route listing and management |
+| `/api/booking` | Booking, cancellation, and booking management |
+| `/api/user` | User listing and admin dashboard data |
+
+Most operations use an `action` request parameter to determine the required operation.
+
+## Configuration
+
+Database credentials should be provided through environment variables instead of being stored directly in the source code.
+
+For example, in PowerShell:
+
+```powershell
+$env:BUS_DB_URL = "jdbc:mysql://localhost:3306/bus_booking_db"
+$env:BUS_DB_USER = "root"
+$env:BUS_DB_PASSWORD = "your_password"
+```
+
+Do not commit real passwords, API keys, or other sensitive information to GitHub.
+
 ## Requirements
 
-Install the following software before running the project:
+Before running the project, make sure you have:
 
-- JDK 8 or a compatible newer JDK
+- JDK 8 or later
 - Apache Maven 3.6+
-- MySQL Server 8+
-- Apache Tomcat, if deploying the generated WAR manually
+- MySQL 8+
+- Apache Tomcat
 
-Verify Java and Maven:
+You can check your Java and Maven installations using:
 
 ```bash
 java -version
 mvn -version
 ```
 
-## Database Setup
+## Notes
 
-1. Start the MySQL server.
-2. Create the database:
+This project was developed as a Java web application for learning and practicing Java Servlets, database connectivity, backend development, and frontend integration.
 
-```sql
-CREATE DATABASE bus_booking_db;
-```
-
-3. Select the database:
-
-```sql
-USE bus_booking_db;
-```
-
-4. Run the table and sample-data script from the project root:
-
-```bash
-mysql -u root -p bus_booking_db < setup_tables.sql
-```
-
-The script creates the `users`, `buses`, `routes`, and `bookings` tables and inserts sample records.
-
-The repository also includes `setup_db.bat` and `setup_db.ps1` for Windows users. These scripts assume that the MySQL command-line client is available and may require path changes for your local installation.
-
-## Database Configuration
-
-The application reads database settings from environment variables:
-
-| Variable | Default value |
-| --- | --- |
-| `BUS_DB_URL` | `jdbc:mysql://localhost:3306/bus_booking_db` |
-| `BUS_DB_USER` | `root` |
-| `BUS_DB_PASSWORD` | empty |
-
-PowerShell example:
-
-```powershell
-$env:BUS_DB_URL = "jdbc:mysql://localhost:3306/bus_booking_db"
-$env:BUS_DB_USER = "root"
-$env:BUS_DB_PASSWORD = "your-mysql-password"
-```
-
-Set these variables in the same terminal session used to start the application. Do not commit passwords or other secrets to the repository.
-
-## Build and Run
-
-Build the WAR file:
-
-```bash
-mvn clean package
-```
-
-Run with the configured Tomcat Maven plugin:
-
-```bash
-mvn tomcat7:run
-```
-
-Open the application at:
-
-```text
-http://localhost:8080/BusBookingSystem/
-```
-
-The generated WAR file is created at `target/BusBookingSystem-1.0.war`.
-
-To deploy manually, copy the WAR file to the `webapps` directory of a compatible Tomcat server and start Tomcat.
-
-## API Endpoints
-
-The frontend communicates with these servlet endpoints:
-
-- `/api/auth` - signup and login
-- `/api/bus` - bus search and bus administration
-- `/api/route` - route listing and route administration
-- `/api/booking` - booking, cancellation, passenger bookings, and admin booking listing
-- `/api/user` - user listing and admin dashboard statistics
-
-Most operations use an `action` request parameter to select the operation.
-
-## Sample Accounts
-
-The database seed script inserts these demo accounts:
-
-| Role | Email | Password |
-| --- | --- | --- |
-| Admin | `admin@busapp.com` | `admin123` |
-| Passenger | `john@busapp.com` | `pass123` |
-
-Change or remove these sample credentials before using the application outside a local development environment.
-
-## Security Notes
-
-This project is intended for learning and demonstration purposes. Before production use, add password hashing, server-side authorization checks for admin endpoints, input validation, CSRF protection, secure session settings, transaction handling for booking operations, and HTTPS. Never store real credentials in source code or seed files.
+It is intended for learning and demonstration purposes rather than production use.
 
 ## License
 
-No license has been specified for this repository yet.
+No license has been added to this project yet.
