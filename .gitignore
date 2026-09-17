@@ -1,0 +1,43 @@
+# Maven build output
+/target/
+
+# Local duplicate/build output
+/bin/
+
+# Eclipse project metadata
+/.classpath
+/.project
+/.settings/
+
+# Logs, crash dumps, and runtime files
+*.log
+*.out
+*.err
+hs_err_pid*.log
+replay_pid*.log
+catalina.out
+
+# Temporary and editor files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Local environment and sensitive configuration
+.env
+.env.*
+!.env.example
+*.local
+*.secret
+*.secrets
+*.credentials
+*.key
+*.pem
+*.p12
+*.jks
+
+# Unneeded plain-text files
+*.txt

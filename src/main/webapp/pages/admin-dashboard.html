@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — Bus Booking System</title>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>🚌</span>
+    <span>BusAdmin</span>
+  </div>
+  <nav style="flex:1">
+    <div class="nav-item active" id="nav-dashboard"  onclick="showTab('dashboard')">
+      <i class="fa fa-chart-line"></i><span>Dashboard</span>
+    </div>
+    <div class="nav-item" id="nav-buses"     onclick="showTab('buses')">
+      <i class="fa fa-bus"></i><span>Buses</span>
+    </div>
+    <div class="nav-item" id="nav-routes"    onclick="showTab('routes')">
+      <i class="fa fa-route"></i><span>Routes</span>
+    </div>
+    <div class="nav-item" id="nav-bookings"  onclick="showTab('bookings')">
+      <i class="fa fa-ticket"></i><span>Bookings</span>
+    </div>
+    <div class="nav-item" id="nav-users"     onclick="showTab('users')">
+      <i class="fa fa-users"></i><span>Users</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <button class="btn-logout" onclick="logout()">
+      <i class="fa fa-sign-out-alt"></i><span>Logout</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ═══ MAIN CONTENT ══════════════════════════════════════════════════════ -->
+<main class="main">
+  <div class="topbar">
+    <h1 id="page-title">Dashboard</h1>
+    <span class="admin-badge" id="admin-name">Admin</span>
+  </div>
+
+  <!-- ── DASHBOARD TAB ── -->
+  <section id="tab-dashboard" class="tab-section active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🚌</div>
+        <div class="stat-value" id="stat-buses">—</div>
+        <div class="stat-label">Total Buses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🛣️</div>
+        <div class="stat-value" id="stat-routes">—</div>
+        <div class="stat-label">Total Routes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🎫</div>
+        <div class="stat-value" id="stat-bookings">—</div>
+        <div class="stat-label">Active Bookings</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value" id="stat-users">—</div>
+        <div class="stat-label">Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value" id="stat-revenue">—</div>
+        <div class="stat-label">Revenue (₹)</div>
+      </div>
+    </div>
+    <p style="color:var(--muted);font-size:0.85rem;">
+      <i class="fa fa-info-circle"></i>
+      Use the sidebar to manage Buses, Routes, Bookings and Users.
+    </p>
+  </section>
+
+  <!-- ── BUSES TAB ── -->
+  <section id="tab-buses" class="tab-section">
+    <div class="section-header">
+      <h2><i class="fa fa-bus"></i> Bus Management</h2>
+      <button class="btn btn-primary" onclick="openAddBus()">
+        <i class="fa fa-plus"></i> Add Bus
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Bus Name</th><th>Bus Number</th>
+            <th>Type</th><th>Total</th><th>Available</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bus-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── ROUTES TAB ── -->
+  <section id="tab-routes" class="tab-section">
+    <div class="section-header">
+      <h2><i class="fa fa-route"></i> Route Management</h2>
+      <button class="btn btn-primary" onclick="openAddRoute()">
+        <i class="fa fa-plus"></i> Add Route
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Bus</th><th>Source</th><th>Destination</th>
+            <th>Departure</th><th>Arrival</th><th>Fare (₹)</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="route-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── BOOKINGS TAB ── -->
+  <section id="tab-bookings" class="tab-section">
+    <div class="section-header">
+      <h2><i class="fa fa-ticket"></i> All Bookings</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Passenger</th><th>Route</th><th>Bus</th>
+            <th>Seat</th><th>Price (₹)</th><th>Status</th><th>Date</th><th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="booking-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── USERS TAB ── -->
+  <section id="tab-users" class="tab-section">
+    <div class="section-header">
+      <h2><i class="fa fa-users"></i> All Users</h2>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Registered</th>
+          </tr>
+        </thead>
+        <tbody id="user-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- ═══ MODALS ════════════════════════════════════════════════════════════ -->
+
+<!-- Bus Modal -->
+<div class="modal-overlay" id="bus-modal">
+  <div class="modal">
+    <h3 id="bus-modal-title">Add New Bus</h3>
+    <input type="hidden" id="bus-id"/>
+    <div class="form-group">
+      <label>Bus Name</label>
+      <input type="text" id="bus-name" placeholder="e.g. Express 01"/>
+    </div>
+    <div class="form-group">
+      <label>Bus Number</label>
+      <input type="text" id="bus-number" placeholder="e.g. AP-01-AB-1234"/>
+    </div>
+    <div class="form-group">
+      <label>Total Seats</label>
+      <input type="number" id="bus-seats" min="1" placeholder="42"/>
+    </div>
+    <div class="form-group">
+      <label>Bus Type</label>
+      <select id="bus-type">
+        <option value="AC">AC</option>
+        <option value="Non-AC">Non-AC</option>
+        <option value="Luxury">Luxury</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" onclick="closeBusModal()">Cancel</button>
+      <button class="btn btn-success" onclick="saveBus()">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Route Modal -->
+<div class="modal-overlay" id="route-modal">
+  <div class="modal">
+    <h3 id="route-modal-title">Add New Route</h3>
+    <input type="hidden" id="route-id"/>
+    <div class="form-group">
+      <label>Bus</label>
+      <select id="route-bus-id"></select>
+    </div>
+    <div class="form-group">
+      <label>Source City</label>
+      <input type="text" id="route-source" placeholder="e.g. Hyderabad"/>
+    </div>
+    <div class="form-group">
+      <label>Destination City</label>
+      <input type="text" id="route-destination" placeholder="e.g. Bangalore"/>
+    </div>
+    <div class="form-group">
+      <label>Departure Date &amp; Time</label>
+      <input type="datetime-local" id="route-departure"/>
+    </div>
+    <div class="form-group">
+      <label>Arrival Date &amp; Time</label>
+      <input type="datetime-local" id="route-arrival"/>
+    </div>
+    <div class="form-group">
+      <label>Fare (₹)</label>
+      <input type="number" id="route-fare" min="0" placeholder="500"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" onclick="closeRouteModal()">Cancel</button>
+      <button class="btn btn-success" onclick="saveRoute()">
+        <i class="fa fa-save"></i> Save
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- ═══ SCRIPTS ═══════════════════════════════════════════════════════════ -->
+<script src="../js/admin-main.js"></script>
+<script src="../js/admin-buses.js"></script>
+<script src="../js/admin-routes.js"></script>
+<script src="../js/admin-bookings.js"></script>
+<script src="../js/admin-users.js"></script>
+
+</body>
+</html>

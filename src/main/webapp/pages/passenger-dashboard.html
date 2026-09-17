@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Passenger Dashboard — Bus Booking</title>
+  <link rel="stylesheet" href="../css/admin.css"/>
+  <link rel="stylesheet" href="../css/passenger.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <span>🎫</span>
+    <span>BusTickets</span>
+  </div>
+  <nav style="flex:1">
+    <div class="nav-item active" id="nav-search"   onclick="showTab('search')">
+      <i class="fa fa-search"></i><span>Search Buses</span>
+    </div>
+    <div class="nav-item" id="nav-bookings" onclick="showTab('bookings')">
+      <i class="fa fa-ticket"></i><span>My Bookings</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div style="color:var(--muted);font-size:0.78rem;margin-bottom:10px;padding:0 4px">
+      <i class="fa fa-user-circle"></i> <span id="sidebar-name">Passenger</span>
+    </div>
+    <button class="btn-logout" onclick="logout()">
+      <i class="fa fa-sign-out-alt"></i><span>Logout</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ═══ MAIN CONTENT ═══════════════════════════════════════════════════════ -->
+<main class="main">
+  <div class="topbar">
+    <h1 id="page-title">Search Buses</h1>
+    <span class="admin-badge" style="background:var(--purple)" id="passenger-badge">Passenger</span>
+  </div>
+
+  <!-- ── SEARCH TAB ── -->
+  <section id="tab-search" class="tab-section active">
+
+    <!-- Search Form Card -->
+    <div class="search-card">
+      <div class="search-row">
+        <div class="search-field">
+          <label><i class="fa fa-map-marker-alt"></i> From</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="src" placeholder="e.g. Hyderabad" autocomplete="off"
+                   oninput="filterCities('src','src-list')"
+                   onkeydown="navigateDropdown(event,'src-list')"
+                   onfocus="filterCities('src','src-list')"/>
+            <div class="autocomplete-list" id="src-list"></div>
+          </div>
+        </div>
+        <div class="swap-btn" onclick="swapCities()" title="Swap">
+          <i class="fa fa-exchange-alt"></i>
+        </div>
+        <div class="search-field">
+          <label><i class="fa fa-map-marker"></i> To</label>
+          <div class="autocomplete-wrap">
+            <input type="text" id="dest" placeholder="e.g. Bangalore" autocomplete="off"
+                   oninput="filterCities('dest','dest-list')"
+                   onkeydown="navigateDropdown(event,'dest-list')"
+                   onfocus="filterCities('dest','dest-list')"/>
+            <div class="autocomplete-list" id="dest-list"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary search-go" onclick="searchBuses()">
+          <i class="fa fa-search"></i> Search
+        </button>
+      </div>
+    </div>
+
+
+    <!-- Results -->
+    <div id="search-results"></div>
+  </section>
+
+  <!-- ── MY BOOKINGS TAB ── -->
+  <section id="tab-bookings" class="tab-section">
+    <div class="section-header">
+      <h2><i class="fa fa-ticket"></i> My Bookings</h2>
+      <button class="btn btn-primary" onclick="loadMyBookings()">
+        <i class="fa fa-sync"></i> Refresh
+      </button>
+    </div>
+    <div id="my-bookings-list"></div>
+  </section>
+</main>
+
+<!-- ═══ BOOKING MODAL ══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="book-modal">
+  <div class="modal">
+    <h3><i class="fa fa-ticket" style="color:var(--blue)"></i> Book Your Ticket</h3>
+
+    <div class="trip-summary" id="trip-summary"></div>
+
+    <div class="form-group" style="margin-top:16px">
+      <label>Select Seat Number</label>
+      <div class="seat-grid" id="seat-grid"></div>
+    </div>
+
+    <div class="selected-seat-info" id="selected-seat-info" style="display:none">
+      <i class="fa fa-chair"></i>
+      Seat <strong id="chosen-seat">—</strong> selected &nbsp;|&nbsp;
+      Fare: <strong id="chosen-fare">—</strong>
+    </div>
+
+    <input type="hidden" id="book-route-id"/>
+    <input type="hidden" id="book-total-seats"/>
+    <input type="hidden" id="book-fare"/>
+    <input type="hidden" id="book-seat"/>
+
+    <div class="modal-footer">
+      <button class="btn btn-danger" onclick="closeBookModal()">Cancel</button>
+      <button class="btn btn-success" onclick="confirmBooking()">
+        <i class="fa fa-check"></i> Confirm Booking
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Scripts -->
+<script src="../js/passenger-main.js"></script>
+<script src="../js/passenger-search.js"></script>
+<script src="../js/passenger-bookings.js"></script>
+</body>
+</html>
